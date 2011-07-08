@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="midgard.mvccompat.router_listener" class="Midgard\MvcCompatBundle\EventListener\RouterListener">
+            <tag name="kernel.listener" event="core.request" method="onCoreRequest" />
+        </service>
+        <service id="midgard.mvccompat.kernel_listener.view" class="Midgard\MvcCompatBundle\EventListener\CoreViewListener">
+            <tag name="kernel.listener" event="core.view" method="filterResponse" />
+            <argument id="templating" type="service" />
+        </service>
+    </services>
+</container>
