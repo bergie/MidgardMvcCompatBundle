@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-class \midgardmvc_core_request
+class midgardmvc_core_request
 {
     private $request;
 
@@ -80,5 +80,4 @@ class \midgardmvc_core_request
         $this->request->attributes('midgardmvc_subrequest', true);
     }
 
-    public function
 }

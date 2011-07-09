@@ -1,9 +1,9 @@
 <?php
-namespace Midgard\MvcCompatBundle
+namespace Midgard\MvcCompatBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Midgard\MvcCompatBundle\DependencyInjection;
+use Midgard\MvcCompatBundle\DependencyInjection\ControllerResolverPass;
 
 class MidgardMvcCompatBundle extends Bundle
 {

@@ -4,7 +4,7 @@ namespace Midgard\MvcCompatBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
-require "../Compat/midgardmvc_core_request.php";
+require __DIR__.'/../Compat/midgardmvc_core_request.php';
 
 class ControllerResolver implements ControllerResolverInterface
 {
