@@ -4,7 +4,7 @@ This bundle has been created to allow running [Midgard MVC](https://github.com/m
 
 Note: this is still under heavy development.
 
-## Configuration
+## Installation
 
 Install this bundle by adding the following to the `deps` file and running `php bin/vendors install`:
 
@@ -20,12 +20,16 @@ And enable this bundle in your Kernel:
 
     new Midgard\MvcCompatBundle\MidgardMvcCompatBundle()
 
-You also need to tell the MvcCompat autoloader where your Midgard MVC components are installed. Do this by editing your `config.yml`. If your components are installed in the `midgardmvc` directory under Symfony2 root, then:
+## Configuration
+
+You need to tell the MvcCompat autoloader where your Midgard MVC components are installed.
+
+Do this by editing your `config.yml`. If your components are installed in the `midgardmvc` directory under Symfony2 root, then:
 
     midgard_mvc_compat:
         root: "%kernel.root_dir%/../midgardmvc"
 
-## Running components
+## Running components in your Symfony2 application
 
 You can run individual components by adding them to your route configuration. For example:
 
