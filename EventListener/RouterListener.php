@@ -1,5 +1,5 @@
 <?php
-namespace ...
+namespace Midgard\MvcCompatBundle\EventListener;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -9,7 +9,6 @@ class RouterListener
     public function onCoreRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-
         if ($request->attributes->has('_controller')) {
             return;
         }
@@ -20,8 +19,7 @@ class RouterListener
 
         // TODO: We need Midgard-compatible request object to do this
         $routes = \midgardmvc_core::get_instance()->component->get_routes($request);
-        $argv_str = preg_replace('%/{2,}%', '/', '/' . implode('/', $reques
-t->get_arguments()) . '/');
+        $argv_str = preg_replace('%/{2,}%', '/', '/' . implode('/', $request->get_arguments()) . '/');
 
         $query = $request->query->all();
         foreach ($routes as $route)

@@ -6,10 +6,10 @@
 
     <services>
         <service id="midgard.mvccompat.router_listener" class="Midgard\MvcCompatBundle\EventListener\RouterListener">
-            <tag name="kernel.listener" event="core.request" method="onCoreRequest" />
+            <tag name="kernel.event_listener" event="kernel.request" method="onCoreRequest" />
         </service>
         <service id="midgard.mvccompat.kernel_listener.view" class="Midgard\MvcCompatBundle\EventListener\CoreViewListener">
-            <tag name="kernel.listener" event="core.view" method="filterResponse" />
+            <tag name="kernel.event_listener" event="kernel.view" method="filterResponse" />
             <argument id="templating" type="service" />
         </service>
     </services>
