@@ -20,10 +20,10 @@ And enable this bundle in your Kernel:
 
     new Midgard\MvcCompatBundle\MidgardMvcCompatBundle()
 
-You also need to tell the MvcCompat autoloader where your Midgard MVC components are installed. Do this by editing your `config.yml`. If your components are installed in the `compat` directory under Symfony2 root, then:
+You also need to tell the MvcCompat autoloader where your Midgard MVC components are installed. Do this by editing your `config.yml`. If your components are installed in the `midgardmvc` directory under Symfony2 root, then:
 
     midgard_mvc_compat:
-        root: "%kernel.root_dir%/../compat"
+        root: "%kernel.root_dir%/../midgardmvc"
 
 ## Running components
 
@@ -33,3 +33,5 @@ You can run individual components by adding them to your route configuration. Fo
         resource: "org_midgardproject_projectsite"
         prefix: /midgard
         type: midgardmvc
+
+If your components need a Midgard2 repository connection, ensure that you also have the [MidgardConnectionBundle](https://github.com/bergie/MidgardConnectionBundle) installed and configured.
