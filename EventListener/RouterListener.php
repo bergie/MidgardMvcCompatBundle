@@ -15,33 +15,10 @@ class RouterListener
 
         $request->attributes->set('midgardmvc_subrequest', HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType());
 
-        $request->attributes->set('midgardmvc_node', \midgardmvc_core::get_instance()->hierarchy->get_node_by_path($request->getPathInfo()));
+        //$request->attributes->set('midgardmvc_node', \midgardmvc_core::get_instance()->hierarchy->get_node_by_path($request->getPathInfo()));
 
-        // TODO: We need Midgard-compatible request object to do this
-        $routes = \midgardmvc_core::get_instance()->component->get_routes($request);
-        $argv_str = preg_replace('%/{2,}%', '/', '/' . implode('/', $request->get_arguments()) . '/');
+       $controller = "\\" . $request->attributes->get('midgardmvc_controller') . '::' . strtolower($request->getMethod()) . '_' . $request->attributes->get('midgardmvc_action');
 
-        $query = $request->query->all();
-        foreach ($routes as $route)
-        {
-            $matches = $route->check_match($argv_str, $query);
-            if (!is_null($matches))
-            {
-                $matched_routes[$route->id] = $matches;
-            }
-        }
-
-        if (!$matched_routes)
-        {
-            return;
-        }
-
-        $matched_routes = array_reverse($matched_routes);
-        foreach ($matched_routes as $route_id => $arguments) {
-            $request->attributes->set('_controller', "\{$routes[$route_id]->controller}::{$request->getMethod()}_{$route->action}");
-            $request->attributes->set('_route', $routes[$route_id]);
-            // NOTE: For now we only execute first matching route
-            break;
-        }
+       $request->attributes->set('_controller', $controller);
     }
 }

@@ -12,5 +12,10 @@
             <tag name="kernel.event_listener" event="kernel.view" method="filterResponse" />
             <argument id="templating" type="service" />
         </service>
+
+        <service id="midgard.mvccompat.routing.loader.mvc" class="Midgard\MvcCompatBundle\Router\Loader\MvcRouterLoader">
+            <tag name="routing.loader" priority="0" />
+            <argument type="service" id="file_locator" />
+        </service>
     </services>
 </container>
