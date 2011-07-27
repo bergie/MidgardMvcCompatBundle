@@ -2,14 +2,22 @@
 
 namespace Midgard\MvcCompatBundle\Router\Loader;
 
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Config\Loader\FileLoader;
+use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Yaml\Yaml;
 
-class MvcRouterLoader extends FileLoader
+class MvcRouterLoader extends Loader
 {
+    private $rootDir = '';
+
+    public function __construct($rootDir)
+    {
+        $this->rootDir = $rootDir;
+    }
+
     public function supports($resource, $type = null)
     {
         if ($type != 'midgardmvc') {
@@ -20,17 +28,17 @@ class MvcRouterLoader extends FileLoader
             return false;
         }
 
-        if (!file_exists("{$resource}/manifest.yml")) {
+        $path = "{$this->rootDir}/{$resource}/manifest.yml"; 
+        if (!file_exists($path)) {
             return false;
         }
 
         return true;
     }
 
-    public function load($file, $type = null)
+    public function load($component, $type = null)
     {
-        $component = basename($file);
-        $path = $this->locator->locate("{$file}/manifest.yml");
+        $path = "{$this->rootDir}/{$component}/manifest.yml";
 
         $manifest = Yaml::parse($path);
 
@@ -38,7 +46,7 @@ class MvcRouterLoader extends FileLoader
         $collection->addResource(new FileResource($path));
 
         if (!is_array($manifest) || !isset($manifest['routes'])) {
-            throw new \InvalidArgumentException(sprintf('The manifest file "%s" must contain routes.', $file));
+            throw new \InvalidArgumentException(sprintf('The manifest file "%s" must contain routes.', $path));
         }
 
         foreach ($manifest['routes'] as $routeId => $route)

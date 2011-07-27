@@ -4,6 +4,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="midgard.mvccompat.root" />
+    </parameters>
+
     <services>
         <service id="midgard.mvccompat.router_listener" class="Midgard\MvcCompatBundle\EventListener\RouterListener">
             <tag name="kernel.event_listener" event="kernel.request" method="onCoreRequest" />
@@ -15,7 +19,7 @@
 
         <service id="midgard.mvccompat.routing.loader.mvc" class="Midgard\MvcCompatBundle\Router\Loader\MvcRouterLoader">
             <tag name="routing.loader" priority="0" />
-            <argument type="service" id="file_locator" />
+            <argument>%midgard.mvccompat.root%</argument>
         </service>
     </services>
 </container>
