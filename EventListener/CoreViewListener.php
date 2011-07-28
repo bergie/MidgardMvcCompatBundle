@@ -8,14 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CoreViewListener
 {
-    /**
-     * @var Symfony\Bundle\FrameworkBundle\Templating\EngineInterface
-     */
-    private $templating;
+    private $container;
 
-    public function __construct($templating)
+    public function __construct($container)
     {
-        $this->templating = $templating;
+        $this->container = $container;
     }
 
     public function filterResponse(GetResponseForControllerResultEvent $event)
@@ -31,14 +28,23 @@ class CoreViewListener
         }
 
         $controller = $request->attributes->get('midgardmvc_compat_controller');
-        
-        // FIXME: Do actual templating
-        ob_start();
-        var_dump($controller->data);
-        $response = new Response(ob_get_clean());
 
-        //\midgardmvc_core::get_instance()->templating->template($request);
-        //$response = new Response(\midgardmvc_core::get_instance()->templating->display($request, true));
+        $viewName = sprintf('%s:%s:%s.%s.%s',
+            $request->attributes->get('midgardmvc_component'),
+            $request->attributes->get('midgardmvc_controller'),
+            'content',
+            'html',
+            'midgardmvc'
+        );
+
+        $vars = array();
+        $vars['current_component'] = $controller->data;
+        $vars[$request->attributes->get('midgardmvc_component')] = $controller->data;
+        $vars['request'] = $controller->request;
+
+        $content = $this->container->get('templating')->render($viewName, $vars);
+        $response = new Response($content);
+
         $event->setResponse($response);
     }
 }

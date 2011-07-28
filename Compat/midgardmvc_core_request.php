@@ -26,7 +26,18 @@ class midgardmvc_core_request
 
     public function get_path()
     {
-        $this->request->getPathInfo();
+        return $this->request->getPathInfo();
+    }
+
+    public function __get($key)
+    {
+        switch ($key)
+        {
+            case 'uri':
+                return $this->get_path();
+            default:
+                return $this->request->attributes->get($key);
+        }
     }
 
     public function get_component_chain()

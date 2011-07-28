@@ -54,10 +54,15 @@ class MvcRouterLoader extends Loader
             // Normalize route pattern to Symfony format
             $route['path'] = str_replace('{$', '{', $route['path']);
 
+            if (!isset($route['template_aliases'])) {
+                $route['template_aliases'] = array();
+            }
+
             $defaults = array(
                 'midgardmvc_component' => $component,
                 'midgardmvc_controller' => $route['controller'],
-                'midgardmvc_action' => $route['action']
+                'midgardmvc_action' => $route['action'],
+                'midgardmvc_template_aliases' => $route['template_aliases'],
             );
             $reqs = array();
             $options = array();

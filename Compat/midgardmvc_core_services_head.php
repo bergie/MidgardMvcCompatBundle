@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 class midgardmvc_core_services_head
 {
     public function set_title($title)
@@ -35,5 +37,7 @@ class midgardmvc_core_services_head
 
     public function relocate($url = null)
     {
+        // TODO: We need to send this response out somehow
+        return new RedirectResponse($url);
     }
 }

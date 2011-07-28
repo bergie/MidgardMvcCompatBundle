@@ -14,12 +14,27 @@
         </service>
         <service id="midgard.mvccompat.kernel_listener.view" class="Midgard\MvcCompatBundle\EventListener\CoreViewListener">
             <tag name="kernel.event_listener" event="kernel.view" method="filterResponse" />
-            <argument id="templating" type="service" />
+            <argument type="service" id="service_container" />
         </service>
 
         <service id="midgard.mvccompat.routing.loader.mvc" class="Midgard\MvcCompatBundle\Router\Loader\MvcRouterLoader">
             <tag name="routing.loader" priority="0" />
             <argument>%midgard.mvccompat.root%</argument>
+        </service>
+
+        <service id="midgard.mvccompat.templating.name_parser" class="Midgard\MvcCompatBundle\Templating\TemplateNameParser">
+            <argument type="service" id="kernel" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!--<service id="midgard.mvccompat.templating.locator" class="Midgard\MvcCompatBundle\Templating\MidgardMvcLocator">
+            <argument type="service" id="kernel" />
+            <argument type="service" id="service_container" />
+        </service>-->
+
+        <service id="templating.engine.midgardmvc" class="Midgard\MvcCompatBundle\Templating\MidgardMvcEngine">
+            <argument type="service" id="templating.locator" />
+            <argument type="service" id="midgard.mvccompat.templating.name_parser" />
         </service>
     </services>
 </container>
