@@ -29,6 +29,10 @@ Do this by editing your `config.yml`. If your components are installed in the `m
     midgard_mvc_compat:
         root: "%kernel.root_dir%/../midgardmvc"
 
+You also need to register all components you want to use as Symfony2 Bundles in your Kernel:
+
+    new Midgard\MvcCompatBundle\Bundle\ComponentBundle('org_midgardproject_news')
+
 ## Running components in your Symfony2 application
 
 You can run individual components by adding them to your route configuration. For example:
