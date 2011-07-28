@@ -4,6 +4,8 @@ namespace Midgard\MvcCompatBundle\Bundle;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Finder\Finder;
 
 class ComponentBundle extends ContainerAware implements BundleInterface
 {
@@ -51,5 +53,22 @@ class ComponentBundle extends ContainerAware implements BundleInterface
     public function getPath()
     {
         return $this->container->getParameter('midgard.mvccompat.root') . "/{$this->name}";
+    }
+
+    public function registerCommands(Application $application)
+    {
+        if (!$dir = realpath($this->getPath().'/bin')) {
+            return;
+        }
+
+        $finder = new Finder();
+        $finder->files()->name('*command.php')->in($dir);
+
+        foreach ($finder as $file) {
+            $r = new \ReflectionClass("\\{$this->getName()}_bin_".$file->getBasename('.php'));
+            if ($r->isSubclassOf('Symfony\\Component\\Console\\Command\\Command') && !$r->isAbstract()) {
+                $application->add($r->newInstance());
+            }
+        }
     }
 }
