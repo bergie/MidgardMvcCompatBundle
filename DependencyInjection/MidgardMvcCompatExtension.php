@@ -23,5 +23,8 @@ class MidgardMvcCompatExtension extends Extension
 
         $container->setParameter('midgard.mvccompat.root', $rootDir);
 
+        if (isset($configs[0]['layout'])) {
+            $container->setParameter('midgard.mvccompat.layout', $configs[0]['layout']);
+        }
     }
 }

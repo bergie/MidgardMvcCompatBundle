@@ -43,6 +43,16 @@ class CoreViewListener
         $vars['request'] = $controller->request;
 
         $content = $this->container->get('templating')->render($viewName, $vars);
+
+        if ($this->container->hasParameter('midgard.mvccompat.layout')) {
+            $content = $this->container->get('templating')->render(
+                $this->container->getParameter('midgard.mvccompat.layout'),
+                array(
+                    'content' => $content,
+                )
+            );
+        }
+
         $response = new Response($content);
 
         $event->setResponse($response);
