@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
 require __DIR__.'/../Compat/midgardmvc_core_request.php';
 require __DIR__.'/../Compat/midgardmvc_core.php';
+require __DIR__.'/../Compat/exceptions.php';
 
 class ControllerResolver implements ControllerResolverInterface
 {
