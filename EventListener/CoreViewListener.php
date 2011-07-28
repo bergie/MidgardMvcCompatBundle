@@ -31,9 +31,14 @@ class CoreViewListener
         }
 
         $controller = $request->attributes->get('midgardmvc_compat_controller');
+        
+        // FIXME: Do actual templating
+        ob_start();
+        var_dump($controller->data);
+        $response = new Response(ob_get_clean());
 
-        \midgardmvc_core::get_instance()->templating->template($request);
-        $response = new Response(\midgardmvc_core::get_instance()->templating->display($request, true));
+        //\midgardmvc_core::get_instance()->templating->template($request);
+        //$response = new Response(\midgardmvc_core::get_instance()->templating->display($request, true));
         $event->setResponse($response);
     }
 }

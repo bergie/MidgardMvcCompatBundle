@@ -31,6 +31,10 @@ class ControllerResolver implements ControllerResolverInterface
         $controller = new $controller_class($requestCompat);
         $controller->data = array();
 
+        // Pass the controller instance to request so our view listener
+        // can get it
+        $request->attributes->set('midgardmvc_compat_controller', $controller);
+
         return array($controller, strtolower($request->getMethod()) . '_' . $request->attributes->get('midgardmvc_action'));
     }
 
